@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">VisionSample</string>
+    <string name="bind_service">bind service:</string>
+    <string name="preview">preview:</string>
+    <string name="show_from_frame_listener">frame listener:</string>
+    <string name="surface_view_example">surface view example:</string>
+    <string name="frame_listener_example">frame listener example:</string>
+    <string name="save_Color">save color:</string>
+    <string name="save_Depth">save depth:</string>
+</resources>

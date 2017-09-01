@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.74/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="bc98e96b876c25c64d67747962e563b80c56d3cf">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-basic-class-0.5.74_d0ab15b82bdb1215106794c6ec75209b4f9b961a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jacob/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/support-annotations-24.2.1_8e4dce786797450e3bd4e0e7273f7fd7d686ad3c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.43/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="6283f728b5ee047f0afd8b5dd77b02dcd873f0b1">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-sdkbase-0.1.43_da2f48d70defd1d13719f7e1f86ead3673104ef4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.124/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="6e2c0faae3bbfb8ad7262cfcf1b0845beda13b70">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-visionsdk-0.6.124_b8fae05b300fb1affd5579db890d5a68ddb77cb3.jar" />
+    </item>
+
+</items>

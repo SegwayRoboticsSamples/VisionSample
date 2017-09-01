@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="visionsdk-0.6.124">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.124/res" />
+      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.124/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.segway.robot/visionsdk/0.6.124/b5fbb30e41dd16af5d4da5736a5072bf2e817bae/visionsdk-0.6.124-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
