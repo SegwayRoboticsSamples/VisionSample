@@ -46,5 +46,5 @@ repositories{
 }
 
 dependencies {
-   compile 'com.segway.robot:visionsdk:0.6.124'
+   compile 'com.segway.robot:visionsdk:0.6.170'
 }

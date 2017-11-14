@@ -1,7 +1,15 @@
 package com.segway.robot.host.coreservice.vision.sample;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbInterface;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -20,6 +28,9 @@ import com.segway.robot.sdk.vision.stream.StreamType;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * The Sample Activity demonstrate the main function of Segway Robot VisionService.
  */
@@ -104,9 +115,9 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
         // 1. Get activated stream info from Vision Service.
         //    Streams are pre-config.
         StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for(StreamInfo info : infos) {
+        for (StreamInfo info : infos) {
             // Adjust image ratio for display
-            float ratio = (float)info.getWidth()/info.getHeight();
+            float ratio = (float) info.getWidth() / info.getHeight();
             ViewGroup.LayoutParams layout;
             switch (info.getStreamType()) {
                 case StreamType.COLOR:
@@ -138,7 +149,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
      */
     private synchronized void stopPreview() {
         StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for(StreamInfo info : infos) {
+        for (StreamInfo info : infos) {
             switch (info.getStreamType()) {
                 case StreamType.COLOR:
                     // Stop color preview
@@ -173,7 +184,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
                     };
 
                     // save image in a new thread
-                    if(mIsSaveColor) {
+                    if (mIsSaveColor) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -183,7 +194,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
                                     mColorBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
                                     fOut.flush();
                                     fOut.close();
-                                } catch(IOException e) {
+                                } catch (IOException e) {
                                     Log.e("VisionSample", "File not found!", e);
                                 }
                             }
@@ -201,7 +212,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
                     };
 
                     // save image in a new thread
-                    if(mIsSaveDepth) {
+                    if (mIsSaveDepth) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -212,7 +223,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
                                     mDepthGreyBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
                                     fOut.flush();
                                     fOut.close();
-                                } catch(IOException e) {
+                                } catch (IOException e) {
                                     Log.e("VisionSample", "File not found!", e);
                                 }
                             }
@@ -229,27 +240,28 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
 
     /**
      * Convert depth image into grey image
+     *
      * @param img the depth image in RGB_565 format
-     * @return    the GREY image in RGB_565 format
+     * @return the GREY image in RGB_565 format
      */
     private Bitmap depth2Grey(Bitmap img) {
         int width = img.getWidth();
         int height = img.getHeight();
 
-        int []pixels = new int[width * height];
+        int[] pixels = new int[width * height];
 
         img.getPixels(pixels, 0, width, 0, 0, width, height);
         int alpha = 0xFF << 24;
-        for(int i = 0; i < height; i++)  {
-            for(int j = 0; j < width; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 int grey = pixels[width * i + j];
 
-                int red = ((grey  & 0x00FF0000 ) >> 16);
+                int red = ((grey & 0x00FF0000) >> 16);
                 int green = ((grey & 0x0000FF00) >> 8);
                 int blue = (grey & 0x000000FF);
 
                 //grey = (int)((float) red * 0.3 + (float)green * 0.59 + (float)blue * 0.11);
-                grey  = (red*38 + green*75 + blue*15) >> 7;
+                grey = (red * 38 + green * 75 + blue * 15) >> 7;
                 grey = alpha | (grey << 16) | (grey << 8) | grey;
                 pixels[width * i + j] = grey;
             }
@@ -264,7 +276,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
      */
     private synchronized void startImageTransfer() {
         StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for(StreamInfo info : infos) {
+        for (StreamInfo info : infos) {
             switch (info.getStreamType()) {
                 case StreamType.COLOR:
                     colorInfo = info;
@@ -289,6 +301,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
 
     /**
      * Buttons
+     *
      * @param buttonView
      * @param isChecked
      */
@@ -297,7 +310,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
         switch (buttonView.getId()) {
             case R.id.bind:
                 if (isChecked) {
-                    if(!mVision.bindService(this, mBindStateListener)) {
+                    if (!mVision.bindService(this, mBindStateListener)) {
                         mBindSwitch.setChecked(false);
                         Toast.makeText(this, "Bind service failed", Toast.LENGTH_SHORT).show();
                     }
@@ -355,6 +368,7 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
                 }
                 break;
             case R.id.saveDepth:
+                usbTest();
                 if (isChecked) {
                     if (!mBind) {
                         mSaveDepthSwitch.setChecked(false);
@@ -371,13 +385,51 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
         }
     }
 
+    public static final String TAG = "jacob";
+
+    private void usbTest() {
+        UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceHashMap = usbManager.getDeviceList();
+        if (deviceHashMap.size() == 0) {
+            Log.e(TAG, "no usb device detected");
+            return;
+        }
+
+        Iterator<UsbDevice> deviceIterator = deviceHashMap.values().iterator();
+
+        while (deviceIterator.hasNext()) {
+            UsbDevice device = deviceIterator.next();
+            String usbName = device.getDeviceName();
+            Log.e(TAG, device.toString());
+
+            Log.e(TAG, "device name: " + usbName);
+
+            int interCount = device.getInterfaceCount();
+
+            Log.e(TAG, "interface count:" + interCount);
+
+            UsbInterface inter;
+            if (interCount > 0) {
+                int epc;
+                for (int i = 0; i < interCount; i++) {
+                    inter = device.getInterface(i);
+                    epc = inter.getEndpointCount();
+                    Log.e(TAG, "epc: " + epc);
+
+                }
+            }
+
+        }
+
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        if (mBind){
+        if (mBind) {
             mVision.unbindService();
             StreamInfo[] infos = mVision.getActivatedStreamInfo();
-            for(StreamInfo info : infos) {
+            for (StreamInfo info : infos) {
                 switch (info.getStreamType()) {
                     case StreamType.COLOR:
                         mVision.stopListenFrame(StreamType.COLOR);

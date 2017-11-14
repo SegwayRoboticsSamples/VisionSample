@@ -80,9 +80,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.74/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.43/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.124/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.114/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.48/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
@@ -99,8 +99,8 @@
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-annotations-24.2.1" level="project" />
-    <orderEntry type="library" exported="" name="visionsdk-0.6.124" level="project" />
-    <orderEntry type="library" exported="" name="basic-class-0.5.74" level="project" />
-    <orderEntry type="library" exported="" name="sdkbase-0.1.43" level="project" />
+    <orderEntry type="library" exported="" name="basic-class-0.5.114" level="project" />
+    <orderEntry type="library" exported="" name="sdkbase-0.1.48" level="project" />
+    <orderEntry type="library" exported="" name="visionsdk-0.6.170" level="project" />
   </component>
 </module>
