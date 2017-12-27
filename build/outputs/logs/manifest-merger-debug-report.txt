@@ -15,7 +15,7 @@ ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.x
 		INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:4:5-80
-MERGED from [com.segway.robot:sdkbase:0.1.48] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.48/AndroidManifest.xml:11:5-81
+MERGED from [com.segway.robot:sdkbase:0.1.53] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.53/AndroidManifest.xml:11:5-81
 	android:name
 		ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:4:22-78
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
@@ -24,7 +24,7 @@ ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.x
 		ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:5:22-81
 application
 ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:6:5-21:19
-MERGED from [com.segway.robot:basic-class:0.5.114] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.114/AndroidManifest.xml:11:5-15:19
+MERGED from [com.segway.robot:basic-class:0.5.162] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.162/AndroidManifest.xml:11:5-15:19
 	android:label
 		ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:8:9-41
 	android:supportsRtl
@@ -51,9 +51,9 @@ ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.x
 		ADDED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml:17:23-70
 uses-sdk
 INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [com.segway.robot:visionsdk:0.6.170] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/AndroidManifest.xml:7:5-9:41
-MERGED from [com.segway.robot:basic-class:0.5.114] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.114/AndroidManifest.xml:7:5-9:41
-MERGED from [com.segway.robot:sdkbase:0.1.48] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.48/AndroidManifest.xml:7:5-9:41
+MERGED from [com.segway.robot:visionsdk:0.6.217] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.217/AndroidManifest.xml:7:5-9:41
+MERGED from [com.segway.robot:basic-class:0.5.162] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.162/AndroidManifest.xml:7:5-9:41
+MERGED from [com.segway.robot:sdkbase:0.1.53] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.53/AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
 		INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml
 		INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml
@@ -61,10 +61,10 @@ MERGED from [com.segway.robot:sdkbase:0.1.48] /Users/jacob/Desktop/zipFiles/Visi
 		INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml
 		INJECTED from /Users/jacob/Desktop/zipFiles/VisionSample/src/main/AndroidManifest.xml
 uses-feature#android.hardware.camera
-ADDED from [com.segway.robot:visionsdk:0.6.170] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/AndroidManifest.xml:11:5-60
+ADDED from [com.segway.robot:visionsdk:0.6.217] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.217/AndroidManifest.xml:11:5-60
 	android:name
-		ADDED from [com.segway.robot:visionsdk:0.6.170] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/AndroidManifest.xml:11:19-57
+		ADDED from [com.segway.robot:visionsdk:0.6.217] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.217/AndroidManifest.xml:11:19-57
 uses-permission#android.permission.CAMERA
-ADDED from [com.segway.robot:visionsdk:0.6.170] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/AndroidManifest.xml:13:5-65
+ADDED from [com.segway.robot:visionsdk:0.6.217] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.217/AndroidManifest.xml:13:5-65
 	android:name
-		ADDED from [com.segway.robot:visionsdk:0.6.170] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.170/AndroidManifest.xml:13:22-62
+		ADDED from [com.segway.robot:visionsdk:0.6.217] /Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.217/AndroidManifest.xml:13:22-62

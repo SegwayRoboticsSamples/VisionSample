@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="basic-class-0.5.162">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.162/res" />
+      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.162/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.segway.robot/basic-class/0.5.162/75021e87dff89c75db4b1d19796807a3ccf8e46c/basic-class-0.5.162-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

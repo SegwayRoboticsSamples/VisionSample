@@ -59,11 +59,13 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
     ServiceBinder.BindStateListener mBindStateListener = new ServiceBinder.BindStateListener() {
         @Override
         public void onBind() {
+            Log.d(TAG, "onBind() called");
             mBind = true;
         }
 
         @Override
         public void onUnbind(String reason) {
+            Log.d(TAG, "onUnbind() called with: reason = [" + reason + "]");
             mBind = false;
         }
     };
