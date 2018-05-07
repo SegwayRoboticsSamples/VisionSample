@@ -1,44 +1,34 @@
 package com.segway.robot.host.coreservice.vision.sample;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbInterface;
-import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
-import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.segway.robot.sdk.base.bind.ServiceBinder;
 import com.segway.robot.sdk.vision.Vision;
-import com.segway.robot.sdk.vision.frame.Frame;
-import com.segway.robot.sdk.vision.stream.StreamInfo;
 import com.segway.robot.sdk.vision.stream.StreamType;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * The Sample Activity demonstrate the main function of Segway Robot VisionService.
+ *
+ * @author jacob
  */
 public class VisionSampleActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
-    private boolean mBind;
+
+    private static final String TAG = "VisionSampleActivity";
+    private static final int TIME_PERIOD = 5 * 1000;
+
     private Vision mVision;
 
-    private Switch mBindSwitch;
     private Switch mPreviewSwitch;
     private Switch mTransferSwitch;
     private Switch mSaveColorSwitch;
@@ -50,195 +40,219 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
     private ImageView mColorImageView;
     private ImageView mDepthImageView;
 
-    private StreamInfo colorInfo;
-    private StreamInfo depthInfo;
+    private boolean mIsSaveColor;
+    private boolean mIsSaveDepth;
 
-    private Boolean mIsSaveColor;
-    private Boolean mIsSaveDepth;
+    private PreviewPresenter mPreviewPresenter;
+    private TransferPresenter mTransferPresenter;
 
-    ServiceBinder.BindStateListener mBindStateListener = new ServiceBinder.BindStateListener() {
-        @Override
-        public void onBind() {
-            Log.d(TAG, "onBind() called");
-            mBind = true;
-        }
-
-        @Override
-        public void onUnbind(String reason) {
-            Log.d(TAG, "onUnbind() called with: reason = [" + reason + "]");
-            mBind = false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.vision_sample);
 
         // init content view
-        mBindSwitch = (Switch) findViewById(R.id.bind);
         mPreviewSwitch = (Switch) findViewById(R.id.preview);
         mTransferSwitch = (Switch) findViewById(R.id.transfer);
-        mSaveColorSwitch = (Switch) findViewById(R.id.saveColor);
-        mSaveDepthSwitch = (Switch) findViewById(R.id.saveDepth);
 
-        mBindSwitch.setOnCheckedChangeListener(this);
         mPreviewSwitch.setOnCheckedChangeListener(this);
         mTransferSwitch.setOnCheckedChangeListener(this);
-        mSaveColorSwitch.setOnCheckedChangeListener(this);
-        mSaveDepthSwitch.setOnCheckedChangeListener(this);
+
 
         mColorSurfaceView = (SurfaceView) findViewById(R.id.colorSurface);
         mDepthSurfaceView = (SurfaceView) findViewById(R.id.depthSurface);
+
+
+        mSaveColorSwitch = (Switch) findViewById(R.id.saveColor);
+        mSaveDepthSwitch = (Switch) findViewById(R.id.saveDepth);
+
+        mSaveColorSwitch.setOnCheckedChangeListener(this);
+        mSaveDepthSwitch.setOnCheckedChangeListener(this);
+
 
         mColorImageView = (ImageView) findViewById(R.id.colorImage);
         mDepthImageView = (ImageView) findViewById(R.id.depthImage);
 
         // get Vision SDK instance
         mVision = Vision.getInstance();
-        mIsSaveColor = mSaveColorSwitch.isChecked();
-        mIsSaveDepth = mSaveDepthSwitch.isChecked();
+        mVision.bindService(this, mBindStateListener);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        mBindSwitch.setChecked(false);
+    protected void onResume() {
+        super.onResume();
         mPreviewSwitch.setChecked(false);
         mTransferSwitch.setChecked(false);
         mSaveColorSwitch.setChecked(false);
         mSaveDepthSwitch.setChecked(false);
     }
 
-    /**
-     * Start preview color and depth image
-     */
-    private synchronized void startPreview() {
-        // 1. Get activated stream info from Vision Service.
-        //    Streams are pre-config.
-        StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for (StreamInfo info : infos) {
-            // Adjust image ratio for display
-            float ratio = (float) info.getWidth() / info.getHeight();
-            ViewGroup.LayoutParams layout;
-            switch (info.getStreamType()) {
-                case StreamType.COLOR:
-                    // Adjust color surface view
-                    mColorSurfaceView.getHolder().setFixedSize(info.getWidth(), info.getHeight());
-                    layout = mColorSurfaceView.getLayoutParams();
-                    layout.width = (int) (mColorSurfaceView.getHeight() * ratio);
-                    mColorSurfaceView.setLayoutParams(layout);
-
-                    // preview color stream
-                    mVision.startPreview(StreamType.COLOR, mColorSurfaceView.getHolder().getSurface());
-                    break;
-                case StreamType.DEPTH:
-                    // Adjust depth surface view
-                    mDepthSurfaceView.getHolder().setFixedSize(info.getWidth(), info.getHeight());
-                    layout = mDepthSurfaceView.getLayoutParams();
-                    layout.width = (int) (mDepthSurfaceView.getHeight() * ratio);
-                    mDepthSurfaceView.setLayoutParams(layout);
-
-                    // preview depth stream
-                    mVision.startPreview(StreamType.DEPTH, mDepthSurfaceView.getHolder().getSurface());
-                    break;
-            }
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mVision.unbindService();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(10);
     }
 
     /**
-     * Stop preview
+     * @param buttonView
+     * @param isChecked
      */
-    private synchronized void stopPreview() {
-        StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for (StreamInfo info : infos) {
-            switch (info.getStreamType()) {
-                case StreamType.COLOR:
-                    // Stop color preview
-                    mVision.stopPreview(StreamType.COLOR);
-                    break;
-                case StreamType.DEPTH:
-                    // Stop depth preview
-                    mVision.stopPreview(StreamType.DEPTH);
-                    break;
-            }
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.preview:
+                if (isChecked) {
+                    if (mPreviewPresenter == null) {
+                        mPreviewPresenter = new PreviewPresenter(mVision, mColorSurfaceView, mDepthSurfaceView);
+                    }
+                    mPreviewPresenter.start();
+                } else {
+                    mPreviewPresenter.stop();
+                }
+                break;
+            case R.id.transfer:
+                if (isChecked) {
+                    if (mTransferPresenter == null) {
+                        mTransferPresenter = new TransferPresenter(mVision, mIImageState);
+                    }
+                    mTransferPresenter.start();
+                    mSaveColorSwitch.setEnabled(true);
+                    mSaveDepthSwitch.setEnabled(true);
+                } else {
+                    mTransferPresenter.stop();
+                    mSaveColorSwitch.setEnabled(false);
+                    mSaveDepthSwitch.setEnabled(false);
+                }
+                mSaveColorSwitch.setChecked(false);
+                mSaveDepthSwitch.setChecked(false);
+                break;
+            case R.id.saveColor:
+                if (isChecked) {
+                    mIsSaveColor = true;
+                } else {
+                    mIsSaveColor = false;
+                }
+                break;
+            case R.id.saveDepth:
+                if (isChecked) {
+                    mIsSaveDepth = true;
+                } else {
+                    mIsSaveDepth = false;
+                }
+                break;
         }
     }
 
-    /**
-     * FrameListener instance for get raw image data form vision service
-     */
-    Vision.FrameListener mFrameListener = new Vision.FrameListener() {
+    ServiceBinder.BindStateListener mBindStateListener = new ServiceBinder.BindStateListener() {
         @Override
-        public void onNewFrame(int streamType, Frame frame) {
-            final Bitmap mColorBitmap = Bitmap.createBitmap(colorInfo.getWidth(), colorInfo.getHeight(), Bitmap.Config.ARGB_8888);
-            final Bitmap mDepthBitmap = Bitmap.createBitmap(depthInfo.getWidth(), depthInfo.getHeight(), Bitmap.Config.RGB_565);
-            Runnable runnable = null;
-            switch (streamType) {
+        public void onBind() {
+            Log.d(TAG, "onBind() called");
+            mPreviewSwitch.setEnabled(true);
+            mTransferSwitch.setEnabled(true);
+        }
+
+        @Override
+        public void onUnbind(String reason) {
+            Log.d(TAG, "onUnbind() called with: reason = [" + reason + "]");
+        }
+    };
+
+    private IImageState mIImageState = new IImageState() {
+
+        Runnable mRunnable;
+
+        @Override
+        public void updateImage(int type, final Bitmap bitmap) {
+            switch (type) {
                 case StreamType.COLOR:
-                    // draw color image to bitmap and display
-                    mColorBitmap.copyPixelsFromBuffer(frame.getByteBuffer());
-                    runnable = new Runnable() {
+                    mRunnable = new Runnable() {
                         @Override
                         public void run() {
-                            mColorImageView.setImageBitmap(mColorBitmap);
+                            mColorImageView.setImageBitmap(bitmap);
                         }
                     };
-
-                    // save image in a new thread
                     if (mIsSaveColor) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                File f = new File(VisionSampleActivity.this.getExternalFilesDir(null).getAbsolutePath() + "/C" + System.currentTimeMillis() + ".png");
-                                try {
-                                    FileOutputStream fOut = new FileOutputStream(f);
-                                    mColorBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                                    fOut.flush();
-                                    fOut.close();
-                                } catch (IOException e) {
-                                    Log.e("VisionSample", "File not found!", e);
-                                }
-                            }
-                        }).start();
+                        saveColorToFile(bitmap);
                     }
                     break;
                 case StreamType.DEPTH:
-                    // draw depth image to bitmap and display
-                    mDepthBitmap.copyPixelsFromBuffer(frame.getByteBuffer());
-                    runnable = new Runnable() {
+                    mRunnable = new Runnable() {
                         @Override
                         public void run() {
-                            mDepthImageView.setImageBitmap(mDepthBitmap);
+                            mDepthImageView.setImageBitmap(bitmap);
                         }
                     };
-
-                    // save image in a new thread
                     if (mIsSaveDepth) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                File f = new File(VisionSampleActivity.this.getExternalFilesDir(null).getAbsolutePath() + "/D" + System.currentTimeMillis() + ".png");
-                                try {
-                                    FileOutputStream fOut = new FileOutputStream(f);
-                                    Bitmap mDepthGreyBitmap = depth2Grey(mDepthBitmap);
-                                    mDepthGreyBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                                    fOut.flush();
-                                    fOut.close();
-                                } catch (IOException e) {
-                                    Log.e("VisionSample", "File not found!", e);
-                                }
-                            }
-                        }).start();
+                        saveDepthToFile(bitmap);
                     }
                     break;
             }
 
-            if (runnable != null) {
-                runOnUiThread(runnable);
+            if (mRunnable != null) {
+                runOnUiThread(mRunnable);
             }
         }
     };
+
+    private long startTimeColor = System.currentTimeMillis();
+
+    private void saveColorToFile(final Bitmap bitmap) {
+
+        if (System.currentTimeMillis() - startTimeColor < TIME_PERIOD) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startTimeColor = System.currentTimeMillis();
+                File f = new File(getExternalFilesDir(null).getAbsolutePath() + "/C" + System.currentTimeMillis() + ".png");
+                Log.d(TAG, "saveBitmapToFile(): " + f.getAbsolutePath());
+                try {
+                    FileOutputStream fOut = new FileOutputStream(f);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                    fOut.flush();
+                    fOut.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    private long startTimeDepth = System.currentTimeMillis();
+
+    private void saveDepthToFile(final Bitmap bitmap) {
+
+        if (System.currentTimeMillis() - startTimeDepth < TIME_PERIOD) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startTimeDepth = System.currentTimeMillis();
+                File f = new File(getExternalFilesDir(null).getAbsolutePath() + "/D" + System.currentTimeMillis() + ".png");
+                Log.d(TAG, "saveBitmapToFile(): " + f.getAbsolutePath());
+                try {
+                    FileOutputStream fOut = new FileOutputStream(f);
+                    Bitmap greyBitmap = depth2Grey(bitmap);
+                    greyBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                    fOut.flush();
+                    fOut.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
 
     /**
      * Convert depth image into grey image
@@ -271,176 +285,5 @@ public class VisionSampleActivity extends Activity implements CompoundButton.OnC
         Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         result.setPixels(pixels, 0, width, 0, 0, width, height);
         return result;
-    }
-
-    /**
-     * Start transfer raw image data form VisionService to giving FrameListener
-     */
-    private synchronized void startImageTransfer() {
-        StreamInfo[] infos = mVision.getActivatedStreamInfo();
-        for (StreamInfo info : infos) {
-            switch (info.getStreamType()) {
-                case StreamType.COLOR:
-                    colorInfo = info;
-                    mVision.startListenFrame(StreamType.COLOR, mFrameListener);
-                    break;
-                case StreamType.DEPTH:
-                    depthInfo = info;
-                    mVision.startListenFrame(StreamType.DEPTH, mFrameListener);
-                    break;
-            }
-        }
-
-    }
-
-    /**
-     * Stop transfer raw image data
-     */
-    private synchronized void stopImageTransfer() {
-        mVision.stopListenFrame(StreamType.COLOR);
-        mVision.stopListenFrame(StreamType.DEPTH);
-    }
-
-    /**
-     * Buttons
-     *
-     * @param buttonView
-     * @param isChecked
-     */
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.bind:
-                if (isChecked) {
-                    if (!mVision.bindService(this, mBindStateListener)) {
-                        mBindSwitch.setChecked(false);
-                        Toast.makeText(this, "Bind service failed", Toast.LENGTH_SHORT).show();
-                    }
-                    Toast.makeText(this, "Bind service success", Toast.LENGTH_SHORT).show();
-                } else {
-                    mPreviewSwitch.setChecked(false);
-                    mTransferSwitch.setChecked(false);
-                    mSaveColorSwitch.setChecked(false);
-                    mSaveDepthSwitch.setChecked(false);
-                    mVision.unbindService();
-                    mBind = false;
-                    Toast.makeText(this, "Unbind service", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.preview:
-                if (isChecked) {
-                    if (!mBind) {
-                        mPreviewSwitch.setChecked(false);
-                        Toast.makeText(this, "Need to bind service first", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    startPreview();
-                } else {
-                    if (mBind) {
-                        stopPreview();
-                    }
-                }
-                break;
-            case R.id.transfer:
-                if (isChecked) {
-                    if (!mBind) {
-                        mTransferSwitch.setChecked(false);
-                        Toast.makeText(this, "Need to bind service first", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    startImageTransfer();
-                } else {
-                    if (mBind) {
-                        stopImageTransfer();
-                    }
-                }
-                break;
-            case R.id.saveColor:
-                if (isChecked) {
-                    if (!mBind) {
-                        mSaveColorSwitch.setChecked(false);
-                        Toast.makeText(this, "Need to bind service first", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    mIsSaveColor = true;
-                } else {
-                    if (mBind) {
-                        mIsSaveColor = false;
-                    }
-                }
-                break;
-            case R.id.saveDepth:
-                usbTest();
-                if (isChecked) {
-                    if (!mBind) {
-                        mSaveDepthSwitch.setChecked(false);
-                        Toast.makeText(this, "Need to bind service first", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    mIsSaveDepth = true;
-                } else {
-                    if (mBind) {
-                        mIsSaveDepth = false;
-                    }
-                }
-                break;
-        }
-    }
-
-    public static final String TAG = "jacob";
-
-    private void usbTest() {
-        UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-        HashMap<String, UsbDevice> deviceHashMap = usbManager.getDeviceList();
-        if (deviceHashMap.size() == 0) {
-            Log.e(TAG, "no usb device detected");
-            return;
-        }
-
-        Iterator<UsbDevice> deviceIterator = deviceHashMap.values().iterator();
-
-        while (deviceIterator.hasNext()) {
-            UsbDevice device = deviceIterator.next();
-            String usbName = device.getDeviceName();
-            Log.e(TAG, device.toString());
-
-            Log.e(TAG, "device name: " + usbName);
-
-            int interCount = device.getInterfaceCount();
-
-            Log.e(TAG, "interface count:" + interCount);
-
-            UsbInterface inter;
-            if (interCount > 0) {
-                int epc;
-                for (int i = 0; i < interCount; i++) {
-                    inter = device.getInterface(i);
-                    epc = inter.getEndpointCount();
-                    Log.e(TAG, "epc: " + epc);
-
-                }
-            }
-
-        }
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mBind) {
-            mVision.unbindService();
-            StreamInfo[] infos = mVision.getActivatedStreamInfo();
-            for (StreamInfo info : infos) {
-                switch (info.getStreamType()) {
-                    case StreamType.COLOR:
-                        mVision.stopListenFrame(StreamType.COLOR);
-                        break;
-                    case StreamType.DEPTH:
-                        mVision.stopListenFrame(StreamType.DEPTH);
-                        break;
-                }
-            }
-        }
     }
 }
