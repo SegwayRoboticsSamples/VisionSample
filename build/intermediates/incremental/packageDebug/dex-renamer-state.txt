@@ -1,4 +1,4 @@
-#Thu Nov 30 11:28:12 CST 2017
+#Mon May 07 21:23:27 CST 2018
 base.0=/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/transforms/dex/debug/folders/1000/1f/main
 renamed.0=classes.dex
 file.0=/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex

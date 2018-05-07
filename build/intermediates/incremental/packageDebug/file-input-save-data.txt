@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Sep 12 19:51:38 CST 2017
+#Sat Jan 27 17:24:58 CST 2018
 1.base=/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/res/resources-debug.ap_
 4.file=/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/res/resources-debug.ap_/res/layout/vision_sample.xml
 1.file=/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/res/resources-debug.ap_/AndroidManifest.xml

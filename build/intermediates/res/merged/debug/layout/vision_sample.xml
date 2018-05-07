@@ -7,23 +7,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bind_service"
-            android:id="@+id/bind"/>
-
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/preview"
+            android:enabled="false"
             android:id="@+id/preview"/>
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="@string/show_from_frame_listener"
+            android:enabled="false"
             android:id="@+id/transfer"/>
 
     </LinearLayout>
@@ -35,19 +31,21 @@
 
     <LinearLayout
         android:id="@+id/streamLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
-        android:layout_gravity="center_horizontal"
+        android:background="@android:color/black"
         android:orientation="horizontal">
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5">
+
             <SurfaceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:id="@+id/colorSurface"/>
         </FrameLayout>
         <FrameLayout
@@ -57,6 +55,7 @@
             <SurfaceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:id="@+id/depthSurface"/>
         </FrameLayout>
     </LinearLayout>
@@ -67,7 +66,6 @@
         android:text="@string/frame_listener_example"/>
 
     <LinearLayout
-        android:id="@+id/imageLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
@@ -88,12 +86,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_Color"
+            android:enabled="false"
             android:id="@+id/saveColor"/>
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="@string/save_Depth"
+            android:enabled="false"
             android:id="@+id/saveDepth"/>
 
         <FrameLayout
