@@ -76,13 +76,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.183/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.59/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.246/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.6.65/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.65/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.408/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
@@ -98,9 +99,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="com.segway.robot:sdkbase-0.1.59" level="project" />
-    <orderEntry type="library" exported="" name="com.segway.robot:visionsdk-0.6.246" level="project" />
+    <orderEntry type="library" exported="" name="com.segway.robot:visionsdk-0.6.408" level="project" />
+    <orderEntry type="library" exported="" name="com.segway.robot:basic-class-0.6.65" level="project" />
+    <orderEntry type="library" exported="" name="com.segway.robot:sdkbase-0.1.65" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-annotations:24.2.1@jar" level="project" />
-    <orderEntry type="library" exported="" name="com.segway.robot:basic-class-0.5.183" level="project" />
   </component>
 </module>

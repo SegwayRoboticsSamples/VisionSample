@@ -3,12 +3,12 @@
 
     <item
         is-multidex="false"
-        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.59/jars/classes.jar"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.6.65/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.3"
-        sha1="a359d1d28415d10180dd83e262631c35cfb5fb96">
-        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-sdkbase-0.1.59_d3bc706c63b02b36664a10512e96f9f221c7b9a1.jar" />
+        sha1="3672815369410cb77141f78bbabd2f2a2357aac0">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-basic-class-0.6.65_e512ee43f6b6b438a4c5aa020da72a75c51c53a4.jar" />
     </item>
     <item
         is-multidex="false"
@@ -21,21 +21,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.246/jars/classes.jar"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/sdkbase/0.1.65/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.3"
-        sha1="76ad92d5a47b0876308099516addc64b64db9141">
-        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-visionsdk-0.6.246_e04c8fca8542bcfb5392807e8b7223a4c0bfc715.jar" />
+        sha1="09d3cb3349b9a35e7b266edd922d3aebb0a87d6f">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-sdkbase-0.1.65_5a1b24b6cd702784942e1261f4856c00254e59a5.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/basic-class/0.5.183/jars/classes.jar"
+        jar="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/exploded-aar/com.segway.robot/visionsdk/0.6.408/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.3"
-        sha1="7e36af4eb40b86489334cfb90bbef1b7a6409c5c">
-        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-basic-class-0.5.183_9af16830192adbed09331a910e272d1236777c22.jar" />
+        sha1="11b34e2989aa3cf473471e5ff21812aa5e9bd324">
+        <dex dex="/Users/jacob/Desktop/zipFiles/VisionSample/build/intermediates/pre-dexed/debug/com.segway.robot-visionsdk-0.6.408_1c9786943faa1664b05b351b673091d5097214b3.jar" />
     </item>
 
 </items>

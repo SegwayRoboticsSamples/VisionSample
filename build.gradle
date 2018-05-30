@@ -22,9 +22,9 @@ android {
         versionCode 1
         versionName "1.0"
     }
-      lintOptions {
-          abortOnError false
-      }
+    lintOptions {
+        abortOnError false
+    }
 
     buildTypes {
         debug {
@@ -38,7 +38,7 @@ android {
     }
 }
 
-repositories{
+repositories {
     jcenter()
     flatDir {
         dirs file("libs")
@@ -46,5 +46,5 @@ repositories{
 }
 
 dependencies {
-   compile 'com.segway.robot:visionsdk:0.6.246'
+    compile 'com.segway.robot:visionsdk:0.6.408'
 }
